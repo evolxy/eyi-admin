@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import { UserLayout, BasicLayout, BlankLayout } from '@/layouts'
+import { UserLayout, BasicLayout} from '@/layouts'
 import { bxAnaalyse } from '@/core/icons'
 
 const RouteView = {
@@ -15,6 +15,12 @@ export const asyncRouterMap = [
     meta: { title: 'menu.home' },
     redirect: '/dashboard/workplace',
     children: [
+      {
+        name: 'file-upload',
+        path: '/file-upload',
+        component: () => import('@/views/fileManager/index.vue'),
+        meta: { title: 'menu.file-manager', icon: 'cloud-upload-outlined', keepAlive: true }
+      },
       // dashboard
       {
         path: '/dashboard',
