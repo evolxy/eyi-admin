@@ -6,8 +6,8 @@
       :data-source="dataSource"
       :columns="columns"
     >
-      <template #action="{record}">
-        <a @click="clicked(record)">查看详情</a>
+      <template slot="action" slot-scope="text, record">
+        <a @click="clicked(text, record)">查看详情</a>
       </template>
     </a-table>
   </div>
@@ -74,8 +74,8 @@ export default {
     }
   },
   methods: {
-    clicked (record) {
-      console.log(record)
+    clicked (text, record) {
+      console.log(text, record)
     }
   },
   created () {
