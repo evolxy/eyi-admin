@@ -21,6 +21,12 @@ export const asyncRouterMap = [
         component: () => import('@/views/fileManager/index.vue'),
         meta: { title: 'menu.file-manager', icon: 'cloud-upload-outlined', keepAlive: true }
       },
+      {
+        name: 'editor',
+        path: '/editor',
+        component: () => import('@/views/editor/index.vue'),
+        meta: { title: 'menu.editor', icon: 'cloud-upload-outlined', keepAlive: true }
+      },
       // dashboard
       {
         path: '/dashboard',

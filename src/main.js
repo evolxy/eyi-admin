@@ -20,18 +20,30 @@ import './core/lazy_use' // use lazy load components
 // import './permission' // permission control
 import './utils/filter' // global filter
 import './global.less' // global style
-
+import MavonEdit from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+//
+import jQuery from 'jquery'
+import VueFroala from 'vue-froala-wysiwyg'
+require('froala-editor/js/froala_editor.pkgd.min')
+require('froala-editor/js/languages/zh_cn')
+require('froala-editor/css/froala_editor.pkgd.min.css')
+require('font-awesome/css/font-awesome.css')
+require('froala-editor/css/froala_style.min.css')
 Vue.config.productionTip = false
 
 // mount axios to `Vue.$http` and `this.$http`
 Vue.use(VueAxios)
+Vue.use(VueFroala)
+Vue.use(MavonEdit)
 // use pro-layout components
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-container', PageHeaderWrapper)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
 
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
-
+window.$ = jQuery
+window.jQuery = jQuery
 new Vue({
   router,
   store,
