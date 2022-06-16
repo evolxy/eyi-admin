@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export default {
   uploadImg (formData) {
     return request({
-      url: '/admin/fdfs/upload',
+      url: '/store/file',
       method: 'post',
       data: formData
     })

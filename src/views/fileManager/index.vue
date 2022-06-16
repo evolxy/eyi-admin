@@ -97,7 +97,7 @@ export default {
         title: '是否删除删除',
         content: record.originName + ' ?',
         onOk () {
-          request({ url: '/store/fdfs/' + record.id, method: 'delete' }).then(res => {
+          request({ url: '/store/file/' + record.id, method: 'delete' }).then(res => {
             this.$message.success(res.message)
             this.loadData()
           }).catch(err => {
@@ -117,7 +117,7 @@ export default {
       document.body.removeChild(input)
     },
     loadData () {
-      request({ url: '/store/fdfs/page', method: 'get', params: { page: 1, size: 10 } }).then(res => {
+      request({ url: '/store/file/page', method: 'get', params: { page: 1, size: 10 } }).then(res => {
         this.dataSource = [].concat(res.data.content)
         this.total = res.data.numberOfElements
         this.current = res.data.number + 1

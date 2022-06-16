@@ -106,7 +106,7 @@ const vueConfig = {
     // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
     proxy: {
       '/eyi': {
-        target: 'http://114.117.165.130:12001',
+        target: 'http://localhost:12001',
         ws: false,
         changeOrigin: true
       }
@@ -117,7 +117,8 @@ const vueConfig = {
   productionSourceMap: false,
   lintOnSave: undefined,
   // babel-loader no-ignore node_modules/*
-  transpileDependencies: []
+  transpileDependencies: [],
+  publicPath: '/'
 }
 
 // preview.pro.loacg.com only do not use in your production;
