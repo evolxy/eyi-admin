@@ -18,10 +18,16 @@
         <a-divider type="vertical" />
         <a @click="handleCopyUrl(record)">复制url</a>
       </template>
-      <a-modal v-model="showPreview" @Ok="handleOk" title="Basic Modal">
-        <img :src="previewSrc" :alt="previewAlt">
-      </a-modal>
     </a-table>
+    <a-modal
+      @cancel="handleOk"
+      :title="previewAlt"
+      :visible="showPreview">
+      <img :src="previewSrc" :alt="previewAlt">
+      <template slot="footer">
+        <div></div>
+      </template>
+    </a-modal>
   </div>
 </template>
 
@@ -62,14 +68,11 @@ export default {
           scopedSlots: { customRender: 'action' }
         }
       ],
-      current: 1,
-      size: 10,
-      total: 10,
       pagination: {
-        current: this.current,
+        current: 1,
         defaultCurrent: 1,
-        pageSize: this.size,
-        total: this.total,
+        pageSize: 10,
+        total: 1,
         // eslint-disable-next-line no-return-assign
         onShowSizeChange: (current, pageSize) => this.pageSize = pageSize,
         showTotal: total => `共${total}条数据`,
@@ -87,10 +90,9 @@ export default {
       this.showPreview = false
     },
     handlePreview (record) {
-      console.log(record)
-      this.showPreview = true
-      this.previewSrc = record.storePath
-      this.previewAlt = record.originName
+        this.showPreview = true
+        this.previewSrc = record.storePath
+        this.previewAlt = record.originName
     },
     handleDelete (record) {
       this.$confirm({
@@ -116,19 +118,22 @@ export default {
       this.$message.success('复制成功')
       document.body.removeChild(input)
     },
-    loadData () {
-      request({ url: '/store/file/page', method: 'get', params: { page: 1, size: 10 } }).then(res => {
+    loadData (p) {
+      if (p) {
+        this.pagination.current = 1
+      }
+      request({ url: '/store/file/page', method: 'get', params: { current: this.pagination.current, size: this.pagination.pageSize } }).then(res => {
         this.dataSource = [].concat(res.data.content)
-        this.total = res.data.numberOfElements
-        this.current = res.data.number + 1
-        this.size = res.data.size
+        this.pagination.total = Number.parseInt(res.data.totalElements)
+        this.pagination.current = Number.parseInt(res.data.current)
+        this.pagination.pageSize = Number.parseInt(res.data.size)
       }).catch(err => {
         this.$message.error(err.message || '查询失败')
       })
     }
   },
   created () {
-    this.loadData()
+    this.loadData(1)
   }
 }
 </script>

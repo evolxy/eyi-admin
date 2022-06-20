@@ -37,5 +37,6 @@ export default {
   'menu.account.trigger': '触发报错',
   'menu.account.logout': '退出登录',
   'menu.file-manager': '文件管理',
-  'menu.editor': '编辑器'
+  'menu.editor': '编辑器',
+  'menu.article': '文章'
 }

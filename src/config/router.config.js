@@ -17,14 +17,14 @@ export const asyncRouterMap = [
       {
         name: 'file-upload',
         path: '/file-upload',
-        component: () => import('@/views/fileManager/index.vue'),
+        component: () => import('@/views/fileManager/fileList.vue'),
         meta: { title: 'menu.file-manager', icon: 'cloud-upload-outlined', keepAlive: true }
       },
       {
-        name: 'editor',
-        path: '/editor',
-        component: () => import('@/views/editor/markdownEditor.vue'),
-        meta: { title: 'menu.editor', icon: 'cloud-upload-outlined', keepAlive: true }
+        name: 'article',
+        path: '/articles',
+        component: () => import('@/views/article/articleList.vue'),
+        meta: { title: 'menu.article', icon: 'cloud-upload-outlined', keepAlive: true }
       },
       {
         name: 'test',
