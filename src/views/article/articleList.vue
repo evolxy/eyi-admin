@@ -8,6 +8,7 @@
       新建
     </a-button>
     <a-table
+      bordered
       ref="table"
       size="small"
       :columns="columns"
@@ -24,9 +25,9 @@
         </a-tag>
       </span>
       <span slot="action" slot-scope="text, record">
-        <a-button @click="handleDel(record)">删除</a-button>
+        <a-button @click="handleDel(record)" type="danger"><a-icon type="delete" />删除</a-button>
         <a-divider type="vertical" />
-        <a-button @click="handleEdit(record)">编辑</a-button>
+        <a-button @click="handleEdit(record)" type="primary"><a-icon type="edit" />编辑</a-button>
       </span>
     </a-table>
     <markdown-editor ref="editorForm" @ok="loadData"></markdown-editor>
@@ -57,25 +58,37 @@ export default {
       },
       columns: [
         {
+          title: '序号',
+          key: 'index',
+          customRender: function (text, record, index) {
+            return index + 1
+          },
+          width: 50
+        },
+        {
           title: '标题',
           dataIndex: 'title',
-          key: 'title'
+          key: 'title',
+          width: 200
         },
         {
           title: '简介',
           dataIndex: 'subTitle',
-          key: 'subTitle'
+          key: 'subTitle',
+          width: 600
         },
         {
           title: '分类',
           dataIndex: 'catalogs',
           key: 'catalogs',
-          scopedSlots: { customRender: 'tagsSlot' }
+          scopedSlots: { customRender: 'tagsSlot' },
+          width: 400
         },
         {
           title: '操作',
           key: 'action',
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: { customRender: 'action' },
+          width: 200
         }
       ],
       tagColors: ['pink', 'cyan', 'red', 'blue', 'orange', 'green', 'purple'],

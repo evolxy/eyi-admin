@@ -3,27 +3,69 @@
     <a-row :gutter="16" type="flex" justify="center">
       <a-col :order="isMobile ? 2 : 1" :md="24" :lg="16">
 
-        <a-form layout="vertical">
+        <a-form layout="vertical" :form="form">
+          <!--          <a-form-item-->
+          <!--            :label="$t('account.settings.basic.username')"-->
+          <!--          >-->
+          <!--            <a-input-->
+          <!--              v-decorator="['username', { rules: [{ required: true , message:''}] }]"-->
+          <!--              :placeholder="$t('account.settings.basic.username-message')" />-->
+          <!--          </a-form-item>-->
+
           <a-form-item
             :label="$t('account.settings.basic.nickname')"
           >
-            <a-input :placeholder="$t('account.settings.basic.nickname-message')" />
+            <a-input
+              v-decorator="['nickname', { rules: [{ required: true , message:''}] }]"
+              :placeholder="$t('account.settings.basic.nickname-message')" />
           </a-form-item>
+
+          <!--          <a-form-item-->
+          <!--            :label="$t('account.settings.basic.email')"-->
+          <!--            :required="false"-->
+          <!--          >-->
+          <!--            <a-input-->
+          <!--              v-decorator="['email', { rules: [{ required: true , message:''}] }]"-->
+          <!--              placeholder="example@qq.com"/>-->
+          <!--          </a-form-item>-->
+
+          <a-form-item
+            :label="$t('account.settings.basic.gender')"
+            :required="false"
+          >
+            <a-radio-group name="genderGroup" default-value="1" v-decorator="['gender']">
+              <a-radio value="1">
+                男
+              </a-radio>
+              <a-radio value="0">
+                女
+              </a-radio>
+            </a-radio-group>
+          </a-form-item>
+
+          <a-form-item
+            :label="$t('account.settings.basic.birthday')"
+            :required="false"
+          >
+            <a-date-picker
+              format="YYYY-MM-DD"
+              v-decorator="['birthday', { rules: [{ required: true , message:''}] }]"
+              :placeholder="$t('account.settings.basic.birthday-message')"
+              :disabled-date="disabledDate"
+            />
+          </a-form-item>
+
           <a-form-item
             :label="$t('account.settings.basic.profile')"
           >
-            <a-textarea rows="4" :placeholder="$t('account.settings.basic.profile-message')"/>
-          </a-form-item>
-
-          <a-form-item
-            :label="$t('account.settings.basic.email')"
-            :required="false"
-          >
-            <a-input placeholder="example@ant.design"/>
+            <a-textarea
+              v-decorator="['introduce', { rules: [{ required: true , message:''}] }]"
+              rows="4"
+              :placeholder="$t('account.settings.basic.profile-message')"/>
           </a-form-item>
 
           <a-form-item>
-            <a-button type="primary">{{ $t('account.settings.basic.update') }}</a-button>
+            <a-button @click="handleSubmit" type="primary">{{ $t('account.settings.basic.update') }}</a-button>
           </a-form-item>
         </a-form>
 
@@ -34,13 +76,13 @@
           <div class="mask">
             <a-icon type="plus" />
           </div>
-          <img :src="option.img"/>
+          <img :src="option.img" :alt="$t('account.settings.basic.avatar-alt')"/>
         </div>
       </a-col>
 
     </a-row>
 
-    <avatar-modal ref="modal" @ok="setavatar"/>
+    <avatar-modal ref="modal" @ok="setAvatar"/>
 
   </div>
 </template>
@@ -48,6 +90,8 @@
 <script>
 import AvatarModal from './AvatarModal'
 import { baseMixin } from '@/store/app-mixin'
+import moment from 'moment/moment'
+import { updateInfo } from '@/api/user'
 
 export default {
   mixins: [baseMixin],
@@ -58,6 +102,7 @@ export default {
     return {
       // cropper
       preview: {},
+      form: this.$form.createForm(this),
       option: {
         img: '/avatar2.jpg',
         info: true,
@@ -76,8 +121,30 @@ export default {
     }
   },
   methods: {
-    setavatar (url) {
+    setAvatar (url) {
       this.option.img = url
+    },
+    disabledDate (current) {
+      // Can select days before today and today
+      return current && current > moment().endOf('day')
+    },
+    handleSubmit () {
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log('form ', values)
+          values.birthday = this.formatDate(values.birthday)
+          values.gender = values.gender ? values.gender : 0
+          console.log('form ', values)
+          updateInfo(values).then(res => {
+            if (res.success) {
+              this.$message.success('修改成功')
+            }
+          })
+        }
+      })
+    },
+    formatDate (date) {
+      return moment(date).format('YYYY-MM-DD')
     }
   }
 }

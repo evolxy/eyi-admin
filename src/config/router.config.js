@@ -15,23 +15,23 @@ export const asyncRouterMap = [
     redirect: '/dashboard/workplace',
     children: [
       {
-        name: 'file-upload',
-        path: '/file-upload',
+        name: 'file-manager',
+        path: '/file-manager',
         component: () => import('@/views/fileManager/fileList.vue'),
-        meta: { title: 'menu.file-manager', icon: 'cloud-upload-outlined', keepAlive: true }
+        meta: { title: 'menu.file-manager', icon: 'hdd', keepAlive: true }
       },
       {
         name: 'article',
         path: '/articles',
         component: () => import('@/views/article/articleList.vue'),
-        meta: { title: 'menu.article', icon: 'cloud-upload-outlined', keepAlive: true }
+        meta: { title: 'menu.article', icon: 'profile', keepAlive: true }
       },
       {
         name: 'test',
         path: '/test',
         component: () => import('@/views/test/test.vue'),
-        meta: { title: 'test', icon: 'cloud-upload-outlined', keepAlive: true }
-      }
+        meta: { title: 'test', icon: 'wifi', keepAlive: true }
+      },
       // dashboard
       // {
       //   path: '/dashboard',
@@ -220,71 +220,71 @@ export const asyncRouterMap = [
       // },
 
       // account
-      // {
-      //   path: '/account',
-      //   component: RouteView,
-      //   redirect: '/account/center',
-      //   name: 'account',
-      //   meta: { title: 'menu.account', icon: 'user', keepAlive: true, permission: ['user'] },
-      //   children: [
-      //     {
-      //       path: '/account/center',
-      //       name: 'center',
-      //       component: () => import('@/views/account/center'),
-      //       meta: { title: 'menu.account.center', keepAlive: true, permission: ['user'] }
-      //     },
-      //     {
-      //       path: '/account/settings',
-      //       name: 'settings',
-      //       component: () => import('@/views/account/settings/Index'),
-      //       meta: { title: 'menu.account.settings', hideHeader: true, permission: ['user'] },
-      //       redirect: '/account/settings/basic',
-      //       hideChildrenInMenu: true,
-      //       children: [
-      //         {
-      //           path: '/account/settings/basic',
-      //           name: 'BasicSettings',
-      //           component: () => import('@/views/account/settings/BasicSetting'),
-      //           meta: { title: 'account.settings.menuMap.basic', hidden: true, permission: ['user'] }
-      //         },
-      //         {
-      //           path: '/account/settings/security',
-      //           name: 'SecuritySettings',
-      //           component: () => import('@/views/account/settings/Security'),
-      //           meta: {
-      //             title: 'account.settings.menuMap.security',
-      //             hidden: true,
-      //             keepAlive: true,
-      //             permission: ['user']
-      //           }
-      //         },
-      //         {
-      //           path: '/account/settings/custom',
-      //           name: 'CustomSettings',
-      //           component: () => import('@/views/account/settings/Custom'),
-      //           meta: { title: 'account.settings.menuMap.custom', hidden: true, keepAlive: true, permission: ['user'] }
-      //         },
-      //         {
-      //           path: '/account/settings/binding',
-      //           name: 'BindingSettings',
-      //           component: () => import('@/views/account/settings/Binding'),
-      //           meta: { title: 'account.settings.menuMap.binding', hidden: true, keepAlive: true, permission: ['user'] }
-      //         },
-      //         {
-      //           path: '/account/settings/notification',
-      //           name: 'NotificationSettings',
-      //           component: () => import('@/views/account/settings/Notification'),
-      //           meta: {
-      //             title: 'account.settings.menuMap.notification',
-      //             hidden: true,
-      //             keepAlive: true,
-      //             permission: ['user']
-      //           }
-      //         }
-      //       ]
-      //     }
-      //   ]
-      // }
+      {
+        path: '/account',
+        component: RouteView,
+        redirect: '/account/center',
+        name: 'account',
+        meta: { title: 'menu.account', icon: 'user', keepAlive: true, permission: ['user'] },
+        children: [
+          {
+            path: '/account/center',
+            name: 'center',
+            component: () => import('@/views/account/center'),
+            meta: { title: 'menu.account.center', keepAlive: true, permission: ['user'] }
+          },
+          {
+            path: '/account/settings',
+            name: 'settings',
+            component: () => import('@/views/account/settings/Index'),
+            meta: { title: 'menu.account.settings', hideHeader: true, permission: ['user'] },
+            redirect: '/account/settings/basic',
+            hideChildrenInMenu: true,
+            children: [
+              {
+                path: '/account/settings/basic',
+                name: 'BasicSettings',
+                component: () => import('@/views/account/settings/BasicSetting'),
+                meta: { title: 'account.settings.menuMap.basic', hidden: true, permission: ['user'] }
+              },
+              {
+                path: '/account/settings/security',
+                name: 'SecuritySettings',
+                component: () => import('@/views/account/settings/Security'),
+                meta: {
+                  title: 'account.settings.menuMap.security',
+                  hidden: true,
+                  keepAlive: true,
+                  permission: ['user']
+                }
+              },
+              {
+                path: '/account/settings/custom',
+                name: 'CustomSettings',
+                component: () => import('@/views/account/settings/Custom'),
+                meta: { title: 'account.settings.menuMap.custom', hidden: true, keepAlive: true, permission: ['user'] }
+              },
+              {
+                path: '/account/settings/binding',
+                name: 'BindingSettings',
+                component: () => import('@/views/account/settings/Binding'),
+                meta: { title: 'account.settings.menuMap.binding', hidden: true, keepAlive: true, permission: ['user'] }
+              },
+              {
+                path: '/account/settings/notification',
+                name: 'NotificationSettings',
+                component: () => import('@/views/account/settings/Notification'),
+                meta: {
+                  title: 'account.settings.menuMap.notification',
+                  hidden: true,
+                  keepAlive: true,
+                  permission: ['user']
+                }
+              }
+            ]
+          }
+        ]
+      }
 
       // other
       /*

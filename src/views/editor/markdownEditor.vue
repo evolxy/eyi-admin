@@ -51,7 +51,7 @@
                 <a-tag
                   :color="tagColors[tags.indexOf(tag) % 7]"
                   v-else
-                  :key="tag"
+                  :key="tag.catalogName"
                   :closable="index >= 0"
                   @close="() => handleClose(tag)">
                   {{ tag.catalogName }}

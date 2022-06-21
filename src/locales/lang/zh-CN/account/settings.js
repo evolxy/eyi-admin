@@ -10,6 +10,8 @@ export default {
   'account.settings.basic.email-message': '请输入您的邮箱!',
   'account.settings.basic.nickname': '昵称',
   'account.settings.basic.nickname-message': '请输入您的昵称!',
+  'account.settings.basic.username': '账户名',
+  'account.settings.basic.username-message': '请输入您的账户名!',
   'account.settings.basic.profile': '个人简介',
   'account.settings.basic.profile-message': '请输入个人简介!',
   'account.settings.basic.profile-placeholder': '个人简介',
@@ -53,5 +55,10 @@ export default {
   'account.settings.notification.todo': '待办任务',
   'account.settings.notification.todo-description': '待办任务将以站内信的形式通知',
   'account.settings.settings.open': '开',
-  'account.settings.settings.close': '关'
+  'account.settings.settings.close': '关',
+  'account.settings.settings.avatar-alt': '头像',
+  'account.settings.basic.gender': '性别',
+  'account.settings.basic.gender-message': '请选择您的性别',
+  'account.settings.basic.birthday': '生日',
+  'account.settings.basic.birthday-message': '请输入您的生日'
 }
