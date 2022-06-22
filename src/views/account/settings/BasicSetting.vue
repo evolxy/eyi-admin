@@ -149,6 +149,7 @@ export default {
           console.log('form ', values)
           values.birthday = this.formatDate(values.birthday)
           values.gender = values.gender ? values.gender : 0
+          values.avatar = this.option.img
           console.log('form ', values)
           updateInfo(values).then(res => {
             if (res.success) {
