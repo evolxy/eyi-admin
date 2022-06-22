@@ -39,6 +39,35 @@
               <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input-password>
           </a-form-item>
+          <a-row :gutter="16">
+            <a-col class="gutter-row" :span="16">
+              <a-form-item>
+                <a-input
+                  type="text"
+                  :placeholder="$t('user.login.mobile.verification-code.placeholder')"
+                  v-decorator="[
+                    'verificationCode',
+                    {rules: [{ required: true, message: $t('user.login.mobile.verification-code.placeholder') }], validateTrigger: 'change'}
+                  ]"
+                >
+                  <a-icon slot="prefix" type="android" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+                </a-input>
+              </a-form-item>
+            </a-col>
+            <a-col class="gutter-row" :span="8">
+              <a-form-item>
+                <img
+                  @click="handleCaptcha"
+                  alt="captcha"
+                  style="background: white"
+                  :src="this.codeImg"
+                  v-if="this.codeImg"
+                  width="80"
+                  height="32"/>
+              </a-form-item>
+            </a-col>
+          </a-row>
+
         </a-tab-pane>
         <a-tab-pane key="tab2" :tab="$t('user.login.tab-login-email-captcha')">
           <a-form-item>
@@ -117,8 +146,8 @@ import md5 from 'md5'
 import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
-import { get2step } from '@/api/login'
-import { captcha } from '@/api/user'
+// import { get2step } from '@/api/login'
+import { captcha, login } from '@/api/user'
 
 export default {
   components: {
@@ -129,6 +158,7 @@ export default {
       customActiveKey: 'tab1',
       loginBtn: false,
       codeId: '',
+      codeImg: '',
       // login type: 0 email, 1 username, 2 telephone
       loginType: 0,
       isLoginError: false,
@@ -145,17 +175,28 @@ export default {
     }
   },
   created () {
-    get2step({ })
-      .then(res => {
-        this.requiredTwoStepCaptcha = res.result.stepCode
-      })
-      .catch(() => {
-        this.requiredTwoStepCaptcha = false
-      })
+    this.handleCaptcha()
+    // get2step({ })
+    //   .then(res => {
+    //     this.requiredTwoStepCaptcha = res.result.stepCode
+    //   })
+    //   .catch(() => {
+    //     this.requiredTwoStepCaptcha = false
+    //   })
     // this.requiredTwoStepCaptcha = true
   },
   methods: {
     ...mapActions(['Login', 'Logout']),
+    handleCaptcha () {
+      const param = { type: this.loginType === 0 ? 'WEB' : 'EMAIL', email: this.loginType === 1 ? this.form.getFieldsValue(['email']) : '' }
+      captcha(param).then(res => {
+        if (res.success) {
+          this.form.setFieldsValue({ captcha: '', verificationCode: '' })
+          this.codeId = res.data.id
+          this.codeImg = 'data:image/png;base64,' + res.data.img
+        }
+      })
+    },
     // handler
     handleUsernameOrEmail (rule, value, callback) {
       const { state } = this
@@ -247,18 +288,37 @@ export default {
       })
     },
     handleLogin () {
-      if (this.loginType === 1) {
-        this.form.validateFields(['username', 'password'], (err, values) => {
+      let params
+      if (this.loginType === 0) {
+        this.form.validateFields(['username', 'password', 'verificationCode'], (err, values) => {
           if (!err) {
-            console.log('values', values)
+            values.captcha = values.verificationCode
+            Reflect.deleteProperty(values, 'verificationCode')
+            // 加密password
+            params = values
+            params.password = md5(values.password)
           }
         })
-      } else if (this.loginType === 0) {
-
+      } else if (this.loginType === 1) {
+        this.form.validateFields(['captcha'], (err, values) => {
+          if (!err) {
+            params = values
+          }
+        })
       }
+      // code
+      params.codeId = this.codeId
+      // console.log('form data ', params)
+      login(params).then(res => {
+        if (res.success) {
+          this.loginSuccess(res)
+        } else {
+          console.log('登录失败', res)
+        }
+      })
     },
     loginSuccess (res) {
-      console.log(res)
+      // console.log(res)
       // check res.homePage define, set $router.push name res.homePage
       // Why not enter onComplete
       /*
@@ -270,6 +330,7 @@ export default {
         })
       })
       */
+      localStorage.setItem('EYI-TOKEN', 'eyi ' + res.data)
       this.$router.push({ path: '/' })
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {

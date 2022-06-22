@@ -16,3 +16,25 @@ export function captcha (param) {
     params: param
   })
 }
+
+export function login (data) {
+  return request({
+    url: url + '/login',
+    data: data,
+    method: 'post'
+  })
+}
+
+export function logout () {
+  return request({
+    url: url + '/logout',
+    method: 'post'
+  })
+}
+
+export function userInfo () {
+  return request({
+    url: url + '/userInfo',
+    method: 'get'
+  })
+}

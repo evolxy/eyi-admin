@@ -31,7 +31,7 @@
     <br>
     <a-row>
       <a-col :lg="2" :md="2">
-        <a-upload name="file" :beforeUpload="beforeUpload" :showUploadList="false">
+        <a-upload name="file" :file-list="fileList" :beforeUpload="beforeUpload" :showUploadList="false">
           <a-button icon="upload">选择图片</a-button>
         </a-upload>
       </a-col>
@@ -56,6 +56,7 @@
 </template>
 <script>
 import { uploadImg } from '@/api/fileManager'
+import moment from 'moment/moment'
 
 export default {
   data () {
@@ -115,16 +116,16 @@ export default {
 
     // 上传图片（点击上传按钮）
     finish (type) {
-      console.log('finish')
       const _this = this
       const formData = new FormData()
+      const filename = moment().format('YYYYMMDDHHmmSSsss') + '.png'
       // 输出
       if (type === 'blob') {
         this.$refs.cropper.getCropBlob((data) => {
           const img = window.URL.createObjectURL(data)
           this.model = true
           this.modelSrc = img
-          formData.append('file', data, this.fileName)
+          formData.append('file', data, filename)
           uploadImg(formData).then(res => {
             if (res.success) {
               _this.$message.success('上传成功')

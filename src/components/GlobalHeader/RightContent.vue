@@ -8,6 +8,7 @@
 <script>
 import AvatarDropdown from './AvatarDropdown'
 import SelectLang from '@/components/SelectLang'
+import { userInfo } from '@/api/user'
 
 export default {
   name: 'RightContent',
@@ -49,9 +50,12 @@ export default {
   },
   mounted () {
     setTimeout(() => {
-      this.currentUser = {
-        name: 'Serati Ma'
-      }
+      userInfo().then(res => {
+        if (res.success) {
+          localStorage.setItem('userInfo', JSON.stringify(res.data))
+          this.currentUser = res.data
+        }
+      })
     }, 1500)
   }
 }

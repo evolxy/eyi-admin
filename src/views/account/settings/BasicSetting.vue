@@ -91,7 +91,7 @@
 import AvatarModal from './AvatarModal'
 import { baseMixin } from '@/store/app-mixin'
 import moment from 'moment/moment'
-import { updateInfo } from '@/api/user'
+import { updateInfo, userInfo } from '@/api/user'
 
 export default {
   mixins: [baseMixin],
@@ -119,6 +119,21 @@ export default {
         fixedNumber: [1, 1]
       }
     }
+  },
+  mounted () {
+    let user = localStorage.getItem('userInfo')
+    if (!user) {
+      userInfo().then(res => {
+        if (res.success) {
+          user = JSON.stringify(res.data)
+        }
+      })
+    }
+    user = JSON.parse(user)
+    user.gender = user.gender === '男' ? '1' : '0'
+    console.log('user', user)
+    this.option.img = user.avatar
+    this.form.setFieldsValue(user)
   },
   methods: {
     setAvatar (url) {
