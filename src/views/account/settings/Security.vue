@@ -17,12 +17,15 @@
       </template>
 
     </a-list-item>
+    <password-change-modal ref="passwordModal"></password-change-modal>
   </a-list>
 </template>
 
 <script>
+import PasswordChangeModal from '@/views/account/settings/modal/PasswordChangeModal'
 export default {
-computed: {
+  components: { PasswordChangeModal },
+  computed: {
     data () {
         return [
         {
@@ -30,7 +33,7 @@ computed: {
           description: this.$t('account.settings.security.password-description'),
           value: '强',
           actions: { title: this.$t('account.settings.security.modify'),
-            callback: () => { this.$message.success('修改成功') } }
+            callback: () => { this.$refs.passwordModal.showModal() } }
         },
         {
           title: this.$t('account.settings.security.phone'),

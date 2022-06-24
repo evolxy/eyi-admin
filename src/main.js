@@ -25,6 +25,8 @@ import 'mavon-editor/dist/css/index.css'
 //
 import jQuery from 'jquery'
 import VueFroala from 'vue-froala-wysiwyg'
+import NProgress from 'nprogress'
+
 require('froala-editor/js/froala_editor.pkgd.min')
 require('froala-editor/js/languages/zh_cn')
 require('froala-editor/css/froala_editor.pkgd.min.css')
@@ -40,6 +42,18 @@ Vue.use(MavonEdit)
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-container', PageHeaderWrapper)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
+// 路由
+router.beforeEach((to, from, next) => {
+  if (localStorage.getItem('EYI-TOKEN')) {
+    next()
+  } else {
+    next({
+      name: 'login',
+      query: { redirect: to.meta.redirect }
+    })
+    NProgress.done()
+  }
+})
 
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
 window.$ = jQuery

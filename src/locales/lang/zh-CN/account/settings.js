@@ -60,5 +60,8 @@ export default {
   'account.settings.basic.gender': '性别',
   'account.settings.basic.gender-message': '请选择您的性别',
   'account.settings.basic.birthday': '生日',
-  'account.settings.basic.birthday-message': '请输入您的生日'
+  'account.settings.basic.birthday-message': '请输入您的生日',
+  'account.settings.security.old-password': '请输入原密码',
+  'account.settings.security.new-password': '请输入新密码',
+  'account.settings.security.new-password-rewrite': '请再次输入新密码'
 }

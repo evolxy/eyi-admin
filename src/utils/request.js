@@ -54,6 +54,12 @@ request.interceptors.request.use(config => {
 
 // response interceptor
 request.interceptors.response.use((response) => {
+  const code = response['code']
+  const tokenErrorCode = ['40002', '40003', '40004', '40005', '40006', '40007']
+  if (tokenErrorCode.indexOf(code) > -1) {
+    localStorage.removeItem('userInfo')
+    localStorage.removeItem(ACCESS_TOKEN)
+  }
   return response.data
 }, errorHandler)
 
