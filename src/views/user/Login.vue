@@ -253,7 +253,9 @@ export default {
       })
     },
     getCaptcha (e) {
-      e.preventDefault()
+      if (e) {
+        e.preventDefault()
+      }
       const { form: { validateFields }, state } = this
 
       validateFields(['email'], { force: true }, (err, values) => {
@@ -313,7 +315,8 @@ export default {
         if (res.success) {
           this.loginSuccess(res)
         } else {
-          console.log('登录失败', res)
+          this.handleCaptcha()
+          this.$message.error(res.msg || '登录失败')
         }
       })
     },

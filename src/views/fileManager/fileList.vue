@@ -107,11 +107,11 @@ export default {
         content: record.originName + ' ?',
         onOk () {
           request({ url: '/store/file/' + record.id, method: 'delete' }).then(res => {
-            this.$message.success(res.message || '删除成功')
-            this.loadData()
+            this.$message.success(res.msg || '删除成功')
           }).catch(err => {
             this.$message.error('删除失败！' + err)
           })
+          this.loadData()
         },
         onCancel () {
         }

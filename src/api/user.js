@@ -38,3 +38,26 @@ export function userInfo () {
     method: 'get'
   })
 }
+
+export function securityInfo () {
+  return request({
+    url: url + '/addition',
+    method: 'get'
+  })
+}
+
+export function changePass (data) {
+  return request({
+    url: url + '/changePasswd',
+    method: 'post',
+    data
+  })
+}
+
+export function changeAdditionalInfo (data) {
+  return request({
+    url: url + '/change',
+    method: 'post',
+    data
+  })
+}

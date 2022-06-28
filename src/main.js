@@ -44,7 +44,9 @@ Vue.component('page-container', PageHeaderWrapper)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
 // 路由
 router.beforeEach((to, from, next) => {
-  if (localStorage.getItem('EYI-TOKEN')) {
+  // 有token 或跳转目的为登录页则放行
+  const token = localStorage.getItem('EYI-TOKEN')
+  if (token || to.path === '/user/login') {
     next()
   } else {
     next({

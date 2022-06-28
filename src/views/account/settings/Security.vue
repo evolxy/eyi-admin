@@ -18,43 +18,76 @@
 
     </a-list-item>
     <password-change-modal ref="passwordModal"></password-change-modal>
+    <password-question-change-modal ref="questionModal"></password-question-change-modal>
+    <spare-email-change-modal ref="emailChangeModal"></spare-email-change-modal>
   </a-list>
 </template>
 
 <script>
 import PasswordChangeModal from '@/views/account/settings/modal/PasswordChangeModal'
+import { securityInfo } from '@/api/user'
+import PasswordQuestionChangeModal from '@/views/account/settings/modal/PasswordQuestionChangeModal'
+import SpareEmailChangeModal from '@/views/account/settings/modal/SpareEmailChangeModal'
 export default {
-  components: { PasswordChangeModal },
+  components: { SpareEmailChangeModal, PasswordQuestionChangeModal, PasswordChangeModal },
+  created () {
+      securityInfo().then(res => {
+        if (res.success) {
+          this.additionalInfo = res.data
+        }
+      })
+  },
+  data () {
+    return {
+      additionalInfo: {}
+    }
+  },
+  methods: {
+    passwordStrength () {
+      switch (this.additionalInfo.passwordStrength) {
+        case 1:
+          return '弱'
+        case 2:
+          return '较弱'
+        case 3:
+          return '较强'
+        case 4:
+          return '强'
+      }
+    }
+  },
+  filters: {
+  },
   computed: {
     data () {
         return [
         {
           title: this.$t('account.settings.security.password'),
           description: this.$t('account.settings.security.password-description'),
-          value: '强',
+          value: this.passwordStrength(),
           actions: { title: this.$t('account.settings.security.modify'),
             callback: () => { this.$refs.passwordModal.showModal() } }
         },
         {
           title: this.$t('account.settings.security.phone'),
           description: this.$t('account.settings.security.phone-description'),
-          value: '138****8293',
+          value: this.additionalInfo.phone,
           actions: { title: this.$t('account.settings.security.modify'),
             callback: () => { this.$message.success('This is a message of success') } }
         },
         {
           title: this.$t('account.settings.security.question'),
           description: this.$t('account.settings.security.question-description'),
-          value: '',
+          value: this.additionalInfo.question ? '已设置' : '未设置',
           actions: { title: this.$t('account.settings.security.set'),
-          callback: () => { this.$message.error('This is a message of error') } }
+          callback: () => { this.$refs.questionModal.showModal(this.additionalInfo) } }
         },
         {
           title: this.$t('account.settings.security.email'),
           description: this.$t('account.settings.security.email-description'),
-          value: 'ant***sign.com',
+          value: this.additionalInfo.emailAddr,
           actions: { title: this.$t('account.settings.security.modify'),
-          callback: () => { this.$message.warning('This is message of warning') } }
+          callback: () => { this.$refs.emailChangeModal.showModal() } }
         }
       ]
     }

@@ -131,7 +131,6 @@ export default {
     }
     user = JSON.parse(user)
     user.gender = user.gender === '男' ? '1' : '0'
-    console.log('user', user)
     this.option.img = user.avatar
     this.form.setFieldsValue(user)
   },
@@ -154,6 +153,7 @@ export default {
           updateInfo(values).then(res => {
             if (res.success) {
               this.$message.success('修改成功')
+              localStorage.removeItem('userInfo')
             }
           })
         }
