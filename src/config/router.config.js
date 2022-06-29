@@ -26,12 +26,6 @@ export const asyncRouterMap = [
         component: () => import('@/views/article/articleList.vue'),
         meta: { title: 'menu.article', icon: 'profile', keepAlive: true }
       },
-      {
-        name: 'test',
-        path: '/test',
-        component: () => import('@/views/test/test.vue'),
-        meta: { title: 'test', icon: 'wifi', keepAlive: true }
-      },
       // dashboard
       // {
       //   path: '/dashboard',
@@ -258,18 +252,18 @@ export const asyncRouterMap = [
                   permission: ['user']
                 }
               },
-              {
-                path: '/account/settings/custom',
-                name: 'CustomSettings',
-                component: () => import('@/views/account/settings/Custom'),
-                meta: { title: 'account.settings.menuMap.custom', hidden: true, keepAlive: true, permission: ['user'] }
-              },
-              {
-                path: '/account/settings/binding',
-                name: 'BindingSettings',
-                component: () => import('@/views/account/settings/Binding'),
-                meta: { title: 'account.settings.menuMap.binding', hidden: true, keepAlive: true, permission: ['user'] }
-              },
+              // {
+              //   path: '/account/settings/custom',
+              //   name: 'CustomSettings',
+              //   component: () => import('@/views/account/settings/Custom'),
+              //   meta: { title: 'account.settings.menuMap.custom', hidden: true, keepAlive: true, permission: ['user'] }
+              // },
+              // {
+              //   path: '/account/settings/binding',
+              //   name: 'BindingSettings',
+              //   component: () => import('@/views/account/settings/Binding'),
+              //   meta: { title: 'account.settings.menuMap.binding', hidden: true, keepAlive: true, permission: ['user'] }
+              // },
               {
                 path: '/account/settings/notification',
                 name: 'NotificationSettings',

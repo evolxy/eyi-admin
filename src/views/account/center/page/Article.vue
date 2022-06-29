@@ -8,23 +8,20 @@
   >
     <a-list-item :key="item.id" slot="renderItem" slot-scope="item">
       <template slot="actions">
-        <icon-text type="star-o" :text="item.star" />
-        <icon-text type="like-o" :text="item.like" />
-        <icon-text type="message" :text="item.message" />
+        <icon-text type="like-o" :text="item.likeCount" />
+        <icon-text type="message" :text="item.commentCount" />
       </template>
       <a-list-item-meta>
-        <a slot="title" href="https://vue.ant.design/">{{ item.title }}</a>
+        <a slot="title" @click="articleDetail(item.articleId)">{{ item.title }}</a>
         <template slot="description">
-          <span>
-            <a-tag>Ant Design</a-tag>
-            <a-tag>设计语言</a-tag>
-            <a-tag>蚂蚁金服</a-tag>
+          <span v-for="(r, i) in item.catalogs" :key="i">
+            <a-tag :color="tagColors[i%7]">{{ r.catalogName }}</a-tag>
           </span>
         </template>
       </a-list-item-meta>
-      <article-list-content :description="item.description" :owner="item.owner" :avatar="item.avatar" :href="item.href" :updateAt="item.updatedAt" />
+      <article-list-content :description="item.subTitle" :owner="item.createName" :avatar="item.createAvatar" :article-id="item.articleId" :updateTime="item.updateTime" />
     </a-list-item>
-    <div slot="footer" v-if="data.length > 0" style="text-align: center; margin-top: 16px;">
+    <div slot="footer" v-if="showMore" style="text-align: center; margin-top: 16px;">
       <a-button @click="loadMore" :loading="loadingMore">加载更多</a-button>
     </div>
   </a-list>
@@ -33,6 +30,7 @@
 <script>
 import { ArticleListContent } from '@/components'
 import IconText from '@/views/list/search/components/IconText'
+import { apiArticleList } from '@/api/article'
 
 export default {
   name: 'Article',
@@ -44,6 +42,10 @@ export default {
     return {
       loading: true,
       loadingMore: false,
+      showMore: false,
+      page: 1,
+      tagColors: ['pink', 'cyan', 'red', 'blue', 'orange', 'green', 'purple'],
+      size: 10,
       data: []
     }
   },
@@ -51,12 +53,20 @@ export default {
     this.getList()
   },
   methods: {
+    articleDetail (articleId) {
+      console.log('文章详情页 ', articleId)
+    },
     getList () {
-      this.$http.get('/list/article').then(res => {
-        console.log('res', res)
-        this.data = res.result
-        this.loading = false
+      this.loading = true
+      const param = { page: this.page, size: this.size }
+      apiArticleList(param).then(res => {
+        if (res.success) {
+          this.data = [].concat(res.data.content)
+          this.showMore = this.data.length === this.size
+          this.page++
+        }
       })
+      this.loading = false
     },
     loadMore () {
       this.loadingMore = true

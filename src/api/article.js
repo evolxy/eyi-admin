@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 const url = '/admin/article'
+const apiUrl = '/api/article'
 export function saveArticle (formData) {
   return request({
     url: url,
@@ -35,5 +36,13 @@ export function articleDetail (articleId) {
   return request({
     url: url + '/' + articleId,
     method: 'get'
+  })
+}
+
+export function apiArticleList (params) {
+  return request({
+    url: apiUrl + '/list',
+    method: 'get',
+    params: params
   })
 }

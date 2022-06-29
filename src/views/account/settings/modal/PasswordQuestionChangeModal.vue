@@ -74,14 +74,13 @@ export default {
       this.form.resetFields()
     },
     showModal (info) {
+      this.visible = true
       if (info) {
         const { question } = info
         this.$nextTick(() => {
           this.form.setFieldsValue({ question: question })
         })
-        this.form.getFieldsValue(['question'])
       }
-      this.visible = true
     }
   }
 }

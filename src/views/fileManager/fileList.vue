@@ -111,7 +111,7 @@ export default {
           }).catch(err => {
             this.$message.error('删除失败！' + err)
           })
-          this.loadData()
+          this.loadData(1)
         },
         onCancel () {
         }

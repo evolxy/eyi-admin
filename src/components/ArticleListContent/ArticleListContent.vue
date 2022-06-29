@@ -7,8 +7,7 @@
     </div>
     <div class="extra">
       <a-avatar :src="avatar" size="small" />
-      <a :href="href">{{ owner }}</a> 发布在 <a :href="href">{{ href }}</a>
-      <em>{{ updateAt | moment }}</em>
+      <em>最后编辑于: {{ updateTime | moment }}</em>
     </div>
   </div>
 </template>
@@ -33,11 +32,11 @@ export default {
       type: String,
       required: true
     },
-    href: {
+    articleId: {
       type: String,
       required: true
     },
-    updateAt: {
+    updateTime: {
       type: String,
       required: true
     }

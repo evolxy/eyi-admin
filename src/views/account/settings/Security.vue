@@ -28,14 +28,15 @@ import PasswordChangeModal from '@/views/account/settings/modal/PasswordChangeMo
 import { securityInfo } from '@/api/user'
 import PasswordQuestionChangeModal from '@/views/account/settings/modal/PasswordQuestionChangeModal'
 import SpareEmailChangeModal from '@/views/account/settings/modal/SpareEmailChangeModal'
+
 export default {
   components: { SpareEmailChangeModal, PasswordQuestionChangeModal, PasswordChangeModal },
   created () {
-      securityInfo().then(res => {
-        if (res.success) {
-          this.additionalInfo = res.data
-        }
-      })
+    securityInfo().then(res => {
+      if (res.success) {
+        this.additionalInfo = res.data
+      }
+    })
   },
   data () {
     return {
@@ -54,40 +55,71 @@ export default {
         case 4:
           return '强'
       }
+    },
+    spareEmail () {
+      if (this.additionalInfo.status === 1) {
+        return this.additionalInfo.emailAddr
+      } else {
+        return this.additionalInfo.emailAddr + '(未激活)'
+      }
+    },
+    phoneNumber () {
+      const phone = this.additionalInfo.phone
+      if (phone) {
+        const length = phone.length
+        return phone.substr(0, 3) + '-****-' + phone.substr(length - 4, length)
+      } else {
+        return '未设置'
+      }
     }
   },
-  filters: {
-  },
+  filters: {},
   computed: {
     data () {
-        return [
+      return [
         {
           title: this.$t('account.settings.security.password'),
           description: this.$t('account.settings.security.password-description'),
           value: this.passwordStrength(),
-          actions: { title: this.$t('account.settings.security.modify'),
-            callback: () => { this.$refs.passwordModal.showModal() } }
+          actions: {
+            title: this.$t('account.settings.security.modify'),
+            callback: () => {
+              this.$refs.passwordModal.showModal()
+            }
+          }
         },
         {
           title: this.$t('account.settings.security.phone'),
           description: this.$t('account.settings.security.phone-description'),
-          value: this.additionalInfo.phone,
-          actions: { title: this.$t('account.settings.security.modify'),
-            callback: () => { this.$message.success('This is a message of success') } }
+          value: this.phoneNumber(),
+          actions: {
+            title: this.$t('account.settings.security.modify'),
+            callback: () => {
+              this.$message.success('This is a message of success')
+            }
+          }
         },
         {
           title: this.$t('account.settings.security.question'),
           description: this.$t('account.settings.security.question-description'),
           value: this.additionalInfo.question ? '已设置' : '未设置',
-          actions: { title: this.$t('account.settings.security.set'),
-          callback: () => { this.$refs.questionModal.showModal(this.additionalInfo) } }
+          actions: {
+            title: this.$t('account.settings.security.set'),
+            callback: () => {
+              this.$refs.questionModal.showModal(this.additionalInfo)
+            }
+          }
         },
         {
           title: this.$t('account.settings.security.email'),
           description: this.$t('account.settings.security.email-description'),
-          value: this.additionalInfo.emailAddr,
-          actions: { title: this.$t('account.settings.security.modify'),
-          callback: () => { this.$refs.emailChangeModal.showModal() } }
+          value: this.spareEmail(),
+          actions: {
+            title: this.$t('account.settings.security.modify'),
+            callback: () => {
+              this.$refs.emailChangeModal.showModal(this.additionalInfo)
+            }
+          }
         }
       ]
     }
