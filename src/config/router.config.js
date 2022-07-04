@@ -1,4 +1,4 @@
-import { UserLayout, BasicLayout } from '@/layouts'
+import { UserLayout, BasicLayout, EmptyLayout } from '@/layouts'
 
 // eslint-disable-next-line no-unused-vars
 const RouteView = {
@@ -342,6 +342,22 @@ export const asyncRouterMap = [
         ]
       }
       */
+    ]
+  },
+
+  {
+    path: '/',
+    name: 'index',
+    component: EmptyLayout,
+    meta: { title: 'menu.home' },
+    redirect: '/view/article',
+    children: [
+      {
+        name: 'article',
+        path: '/view/article',
+        component: () => import('@/views/guest/articleList.vue'),
+        meta: { title: 'menu.file-manager', icon: 'hdd', keepAlive: true }
+      }
     ]
   },
   {
