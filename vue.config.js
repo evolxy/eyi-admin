@@ -108,7 +108,10 @@ const vueConfig = {
       '/eyi': {
         target: 'http://localhost:12001',
         ws: false,
-        changeOrigin: true
+        changeOrigin: true,
+        pathRewrite: {
+          '/eyi': '/eyi-server'
+        }
       }
     }
   },
@@ -118,7 +121,7 @@ const vueConfig = {
   lintOnSave: undefined,
   // babel-loader no-ignore node_modules/*
   transpileDependencies: [],
-  publicPath: '/'
+  publicPath: isProd ? '/eyi/' : '/'
 }
 
 // preview.pro.loacg.com only do not use in your production;
