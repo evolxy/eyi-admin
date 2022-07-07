@@ -14,6 +14,7 @@
       :columns="columns"
       :data-source="dataSource"
       :pagination="pagination"
+      :scroll="{x: 1200}"
       :rowKey="(record) => record.id">
       <span slot="tagsSlot" slot-scope="text, record">
         <a-tag
@@ -143,5 +144,5 @@ export default {
 </script>
 
 <style scoped>
-
+.ant-table td { white-space: nowrap; }
 </style>

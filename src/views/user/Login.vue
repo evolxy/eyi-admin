@@ -150,6 +150,7 @@ import { timeFix } from '@/utils/util'
 import { captcha, login } from '@/api/user'
 
 export default {
+  name: 'Login',
   components: {
     TwoStepCaptcha
   },

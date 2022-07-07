@@ -102,16 +102,17 @@ export default {
       this.previewAlt = record.originName
     },
     handleDelete (record) {
+      const _this = this
       this.$confirm({
         title: '是否删除删除',
         content: record.originName + ' ?',
         onOk () {
           request({ url: '/store/file/' + record.id, method: 'delete' }).then(res => {
-            this.$message.success(res.msg || '删除成功')
-          }).catch(err => {
-            this.$message.error('删除失败！' + err)
+            if (res.success) {
+              _this.$message.success(res.msg || '删除成功')
+            }
           })
-          this.loadData(1)
+          _this.loadData(1)
         },
         onCancel () {
         }

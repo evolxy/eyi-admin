@@ -5,6 +5,7 @@
     ok-text="上传"
     cancel-text="取消"
     @ok="uploadFile"
+    :confirm-loading="uploading"
     @cancel="handleClose"
     class="container">
     <a-upload
@@ -39,6 +40,11 @@ export default {
       this.visible = true
     },
     uploadFile () {
+      if (this.fileList.length === 0) {
+        this.$message.error('请选择文件后上传')
+        return
+      }
+      this.uploading = true
       const _this = this
       const formData = new FormData()
       this.fileList.forEach(file => {
@@ -55,12 +61,14 @@ export default {
       }).catch(err => {
         console.log(err)
         _this.$message.error('上传失败')
+      }).finally(() => {
+        _this.uploading = false
       })
     },
     handleChange () {},
     beforeUpload (file, fileList) {
       this.fileList = [...this.fileList, file]
-      console.log('before ', this.fileList)
+      // console.log('before ', this.fileList)
       return false
     },
     close () {

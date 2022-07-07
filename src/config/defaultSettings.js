@@ -24,7 +24,7 @@ export default {
   // menu: {
   //   locale: true
   // },
-  title: 'Ant Design Pro',
+  title: 'Eyi',
   pwa: false,
   iconfontUrl: '',
   production: true

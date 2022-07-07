@@ -1,4 +1,4 @@
-import { UserLayout, BasicLayout, EmptyLayout } from '@/layouts'
+import { UserLayout, BasicLayout, BlankLayout } from '@/layouts'
 
 // eslint-disable-next-line no-unused-vars
 const RouteView = {
@@ -348,7 +348,7 @@ export const asyncRouterMap = [
   {
     path: '/',
     name: 'index',
-    component: EmptyLayout,
+    component: BlankLayout,
     meta: { title: 'menu.home' },
     redirect: '/view/article',
     children: [

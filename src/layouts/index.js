@@ -3,6 +3,5 @@ import BlankLayout from './BlankLayout'
 import BasicLayout from './BasicLayout'
 import RouteView from './RouteView'
 import PageView from './PageView'
-import EmptyLayout from '@/layouts/EmptyLayout'
 
-export { UserLayout, BasicLayout, BlankLayout, RouteView, PageView, EmptyLayout }
+export { UserLayout, BasicLayout, BlankLayout, RouteView, PageView }
