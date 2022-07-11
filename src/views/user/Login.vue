@@ -189,8 +189,7 @@ export default {
   methods: {
     ...mapActions(['Login', 'Logout']),
     handleCaptcha () {
-      const param = { type: this.loginType === 0 ? 'WEB' : 'EMAIL', email: this.loginType === 1 ? this.form.getFieldsValue(['email']) : '' }
-      captcha(param).then(res => {
+      captcha().then(res => {
         if (res.success) {
           this.form.setFieldsValue({ captcha: '', verificationCode: '' })
           this.codeId = res.data.id
@@ -272,7 +271,7 @@ export default {
           }, 1000)
 
           // const hide = this.$message.loading('验证码发送中..', 0)
-          const param = { type: 'EMAIL', email: this.form.getFieldsValue(['email']) }
+          const param = { email: this.form.getFieldsValue(['email']) }
           captcha(param).then(res => {
             if (res.success) {
               this.codeId = res.data.id
