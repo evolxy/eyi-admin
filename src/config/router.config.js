@@ -12,7 +12,7 @@ export const asyncRouterMap = [
     name: 'index',
     component: BasicLayout,
     meta: { title: 'menu.home' },
-    redirect: '/articles',
+    redirect: '/view/article',
     children: [
       {
         name: 'file-manager',

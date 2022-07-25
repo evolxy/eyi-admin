@@ -61,3 +61,10 @@ export function changeAdditionalInfo (data) {
     data
   })
 }
+
+export function stationMasterInfo () {
+  return request({
+    url: '/api/user/info',
+    method: 'get'
+  })
+}

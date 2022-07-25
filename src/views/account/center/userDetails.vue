@@ -36,15 +36,33 @@
 </template>
 
 <script>
+import { stationMasterInfo } from '@/api/user'
+
 export default {
   name: 'UserDetails',
   data () {
     return {
-      userInfo: {}
+      userInfo: {
+        avatar: '@/assets/log.svg',
+        nickname: '一一',
+        introduce: '这人很懒， 什么都没写',
+        birthday: '2001-11-11',
+        gender: '男',
+        email: 'eyi.adm@qq.com'
+      }
     }
   },
+  methods: {
+  },
+  created () {
+    stationMasterInfo().then(res => {
+      if (res.success) {
+        this.userInfo = res.data
+      }
+      console.log('res ', res)
+    })
+  },
   mounted () {
-    this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
   }
 }
 </script>
