@@ -253,6 +253,7 @@ export default {
     close () {
       this.form.resetFields()
       this.content = ''
+      this.tags = []
       this.visible = false
     },
     handleSubmit () {
