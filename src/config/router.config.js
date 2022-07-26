@@ -356,7 +356,13 @@ export const asyncRouterMap = [
         name: 'article',
         path: '/view/article',
         component: () => import('@/views/guest/articleList.vue'),
-        meta: { title: 'menu.file-manager', icon: 'hdd', keepAlive: true }
+        meta: { title: 'menu.view', icon: 'hdd', keepAlive: true }
+      },
+      {
+        name: 'articleDetail',
+        path: '/view/article/:articleId',
+        component: () => import('@/views/article/articleView.vue'),
+        meta: { title: 'menu.article-detail', icon: 'hdd', keepAlive: true }
       }
     ]
   },

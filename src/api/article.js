@@ -46,3 +46,11 @@ export function apiArticleList (params) {
     params: params
   })
 }
+
+export function apiArticleDetail (params) {
+  return request({
+    url: apiUrl + '/detail',
+    method: 'get',
+    params: params
+  })
+}

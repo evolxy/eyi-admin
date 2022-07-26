@@ -64,7 +64,7 @@ export function changeAdditionalInfo (data) {
 
 export function stationMasterInfo () {
   return request({
-    url: '/api/user/info',
+    url: '/api/user',
     method: 'get'
   })
 }

@@ -106,6 +106,7 @@ const vueConfig = {
     // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
     proxy: {
       '/eyi': {
+        // target: 'http://arm.xuyupeng.top:12001',
         target: 'http://localhost:12001',
         ws: false,
         changeOrigin: true,

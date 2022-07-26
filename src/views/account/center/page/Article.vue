@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     articleDetail (articleId) {
-      console.log('文章详情页 ', articleId)
+      this.$router.push('/view/article/' + articleId)
     },
     getList () {
       this.loading = true

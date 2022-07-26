@@ -59,7 +59,6 @@ export default {
       if (res.success) {
         this.userInfo = res.data
       }
-      console.log('res ', res)
     })
   },
   mounted () {
